@@ -16,11 +16,13 @@ public class Movement : MonoBehaviour
     // berapa lama spacebar di hold
     float curTime;
     bool isSliding;
+    Vector3 originalTransformScale;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        originalTransformScale = transform.localScale;
     }
 
     // loncat kecepatan 2
@@ -29,23 +31,28 @@ public class Movement : MonoBehaviour
     void Update()
     {
 
-        // unity new input system
-        if(Input.GetKey(rightButton)){
-            rb.velocity = new Vector2(1 * moveSpeed, rb.velocity.y);
-        }
-        else if(Input.GetKey(leftButton)){
-            rb.velocity = new Vector2(-1 * moveSpeed, rb.velocity.y);
-        }
-        else{
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-        if(isGrounded == true && Input.GetKey(KeyCode.Space)){
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        }
-        
         if(isSliding){
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 0.05f);
+        }
+        else if(isSliding == false){
+            if(Input.GetKey(rightButton)){
+                animator.Play("walkingAnimation");
+                transform.localScale = new Vector2(originalTransformScale.x, transform.localScale.y);
+                rb.velocity = new Vector2(1 * moveSpeed, rb.velocity.y);
+            }
+            else if(Input.GetKey(leftButton)){
+                animator.Play("walkingAnimation");
+                transform.localScale = new Vector2(-originalTransformScale.x, transform.localScale.y);
+                rb.velocity = new Vector2(-1 * moveSpeed, rb.velocity.y);
+            }
+            else{
+                animator.Play("IdleAnimation");
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+
+            if(isGrounded == true && Input.GetKey(KeyCode.Space)){
+                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            }
         }
     }
 
