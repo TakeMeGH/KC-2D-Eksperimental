@@ -27,6 +27,18 @@ public class test : MonoBehaviour
         // Debug.Log(flag);
         // Debug.Log("Test variable" + f + " adalah float");
         // Test variable 1.0 adalah float
+        Debug.Log("HALO");
+
+        // 1 - 10
+
+        // int i => variable i sebagai integer
+        // i <= 10 (selama masih <= 10 maka looping lanjut)
+        // i++ (i + 1 setiap loop)
+
+        // 1^2, 3^2, 5^2, 7^2
+        for(int i = 1; i <= 10; i++){
+            Debug.Log(i * i);
+        }
     }
 
     // Update is called once per frame
